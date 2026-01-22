@@ -29,7 +29,7 @@ body {
 #operation {
     font-family: 'Digital-7';
     color: white;
-    font-size: 100px;
+    font-size: 50px;
 }
 #userInput {
     border-radius: 6px;
@@ -38,7 +38,7 @@ body {
     border: lightgrey 3px solid;
     background: none;
     outline: none;
-    font-size: 100px;
+    font-size: 50px;
     max-width: 180px;
     box-shadow: none;
     border: 2px solid white;
@@ -61,13 +61,6 @@ button {
     margin-right: 10px;
     background-color: #747474;
     color: white;
-}
-#bravoImage {
-    border-radius: 6px;
-    display: none;
-    position: fixed;
-    right: 0;
-    top: 0;
 }
     </style>
 
@@ -155,11 +148,9 @@ button {
 			    if (e.target.value === '') {
 			        e.target.style.color = 'white';
 			    } else {
-			        e.target.style.color = ''; // Reset to default color when there's input
+			        e.target.style.color = '';
 			    }
 
-				alert(userInput.value.length + "__" + userInput.value)
-				
 			    if (userInput.value.length > 0) {
 			        if (userInput.value == (number1 * number2)) {
 			            userInput.style.color = "green";
@@ -178,5 +169,6 @@ button {
 </body>
 
 </html>
+
 
 
