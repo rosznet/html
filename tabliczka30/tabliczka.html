@@ -143,7 +143,7 @@ button {
                 userInput.focus();
             }
 
-			// Input event listener
+
 			userInput.addEventListener('input', function(e) {
 			    var nonNumeric = /[^0-9]/g;
 			    if (nonNumeric.test(e.target.value)) {
@@ -157,12 +157,13 @@ button {
 			    } else {
 			        e.target.style.color = ''; // Reset to default color when there's input
 			    }
-			
-			    // Check the answer for every valid input
+
+				alert(userInput.value.length + "__" + userInput.value)
+				
 			    if (userInput.value.length > 0) {
 			        if (userInput.value == (number1 * number2)) {
 			            userInput.style.color = "green";
-			            next();
+						setTimeout(next, 1000);
 			        } else {
 			            userInput.style.color = "lightcoral";
 			        }
@@ -177,4 +178,5 @@ button {
 </body>
 
 </html>
+
 
