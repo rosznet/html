@@ -143,44 +143,30 @@ button {
                 userInput.focus();
             }
 
-            userInput.addEventListener('input', function(e) {
-                var nonNumeric = /[^0-9]/g;
-                if (nonNumeric.test(e.target.value)) {
-                    e.target.value = e.target.value.replace(nonNumeric, '');
-                }
-                if (e.target.value > 100) {
-                    e.target.value = '';
-                }
-                if (e.target.value === '') {
-                    e.target.style.color = 'white';
-                }                 
-            });
-
-			let enterPressed = false;
-            window.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !enterPressed) {
-                    enterPressed = true;
-
-                    if (userInput.value.length == 0) {
-                        return;
-                    }
-
-                    if (userInput.value == (number1 * number2)) {
-                        userInput.style.color = "green";
-                        if (indexOnList % 10 === 0) {
-                            bravo();
-                        }
-                        next();
-                    } else {
-                        userInput.style.color = "lightcoral";
-                    }
-                }
-            });
-
-			window.addEventListener('keyup', function(e) {
-				if (e.key === 'Enter') {
-					enterPressed = false;
-				}
+			// Input event listener
+			userInput.addEventListener('input', function(e) {
+			    var nonNumeric = /[^0-9]/g;
+			    if (nonNumeric.test(e.target.value)) {
+			        e.target.value = e.target.value.replace(nonNumeric, '');
+			    }
+			    if (e.target.value > 30) {
+			        e.target.value = '';
+			    }
+			    if (e.target.value === '') {
+			        e.target.style.color = 'white';
+			    } else {
+			        e.target.style.color = ''; // Reset to default color when there's input
+			    }
+			
+			    // Check the answer for every valid input
+			    if (userInput.value.length > 0) {
+			        if (userInput.value == (number1 * number2)) {
+			            userInput.style.color = "green";
+			            next();
+			        } else {
+			            userInput.style.color = "lightcoral";
+			        }
+			    }
 			});
 
             generateListOfMultiplications();
@@ -191,3 +177,4 @@ button {
 </body>
 
 </html>
+
