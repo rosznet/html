@@ -7,6 +7,9 @@
     <link rel="manifest" href="manifest.json">
 
     <style>
+
+
+		
 		@media (max-width: 1000px) {
 		  body {
 		    font-size: 14px;
@@ -17,14 +20,15 @@
 		    src: url('Digital-7.ttf') format('truetype');
 		}
 		body {
-		    background-color: #333; /* dark grey */
+		    background-color: #333;
 		    display: flex;
 		    justify-content: center;
-		    align-items: center;
+		    align-items: flex-start;
 		    height: 100vh;
 		    margin: 0;
 		    padding: 0;
 		    flex-direction: column;
+		    overflow: hidden;
 		}
 		#operation {
 		    font-family: 'Digital-7';
@@ -43,14 +47,6 @@
 		    box-shadow: none;
 		    border: 2px solid white;
 		}		
-		button {
-		    border-radius: 6px;
-		    font-size: 24px;
-		    padding: 10px 20px;
-		    margin: 10px;
-		    min-width: 500px;
-		    background-color: darkgrey;
-		}
 		#indexDisplay {
 		    border-radius: 6px;
 		    position: fixed;
@@ -169,6 +165,7 @@
 </body>
 
 </html>
+
 
 
 
