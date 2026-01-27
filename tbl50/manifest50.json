@@ -1,7 +1,7 @@
 {
   "name": "Tabliczka do 50",
   "short_name": "Tbl50",
-  "start_url": "tbl50.html",
+  "start_url": "tbl.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
@@ -13,3 +13,4 @@
     }
   ]
 }
+
