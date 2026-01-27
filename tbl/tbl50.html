@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <title>Tabliczka mnożenia do 30</title>
+    <title>Tabliczka mnożenia do 50</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-    <link rel="manifest" href="manifest30.json">
+    <link rel="manifest" href="manifest50.json">
 
     <style>
 		@media (max-width: 1000px) {
@@ -68,7 +68,7 @@
 	<script>
 	    if ('serviceWorker' in navigator) {
 	      window.addEventListener('load', function() {
-	            navigator.serviceWorker.register('/service-worker30.js');
+	            navigator.serviceWorker.register('/service-worker50.js');
 	      });
 	    }
 
@@ -91,7 +91,7 @@
 
             function generateListOfMultiplications() {
                 for (var i = 1; i <= 10; i++) {
-                    for (var j = 1; j <= 3; j++) {
+                    for (var j = 1; j <= 5; j++) {
                         pairs.push([i, j]);
                     }
                 }
@@ -115,7 +115,7 @@
 
             function next() {
                 if (indexOnList >= pairs.length) {
-                    alert("Brawo! Tabliczka mnożenia do 30 skończona.");
+                    alert("Brawo! Tabliczka mnożenia do 50 skończona.");
                     indexOnList = 0;
                     shuffleListOfMultiplications();
                 }
@@ -135,7 +135,7 @@
 			    if (nonNumeric.test(e.target.value)) {
 			        e.target.value = e.target.value.replace(nonNumeric, '');
 			    }
-			    if (e.target.value > 30) {
+			    if (e.target.value > 50) {
 			        e.target.value = '';
 			    }
 			    if (e.target.value === '') {
