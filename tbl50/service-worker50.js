@@ -3,7 +3,7 @@ self.addEventListener('install', function(event) {
     caches.open('tbl50-cache').then(function(cache) {
       return cache.addAll([
         '/',
-        '/tbl50.html',
+        '/tbl.html',
         '/Digital-7.ttf'
       ]);
     })
@@ -15,8 +15,9 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request)
       .then((response) => {
         return response || fetch(event.request).catch(() => {
-          return caches.match('/tbl50.html');
+          return caches.match('/tbl.html');
         });
       })
   );
 });
+
