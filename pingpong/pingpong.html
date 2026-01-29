@@ -10,8 +10,7 @@
     --bg: #000;
     --fg: #fff;
     --line: #fff;
-    --hud-padding: 12px;
-    --center-points-size: 400pt;
+    --center-points-size: 200pt;
     --area-height: 70vh;
   }
 
@@ -32,18 +31,12 @@
 
   #hud {
     text-align: center;
-    padding: var(--hud-padding);
+    padding: 12px;
   }
 
   #setsDisplay {
     font-size: 50pt;
-    font-weight: 700;
     font-family: 'Digital-7', system-ui, sans-serif;
-  }
-
-  #msg {
-    height: 20px;
-    margin-top: 6px;
   }
 
   .play-area {
@@ -60,7 +53,7 @@
   }
 
   .center-line {
-    width: 2px;
+    width: 6px;
     background: var(--line);
   }
 
@@ -74,42 +67,26 @@
     align-items: center;
     justify-content: center;
     font-size: var(--center-points-size);
-    font-weight: 700;
     color: var(--fg);
-  }
-
-  .controls {
-    text-align: center;
-    padding: 12px;
-  }
-
-  button {
-    padding: 8px 12px;
-    margin-right: 8px;
   }
 
   @media (max-width: 480px) {
     :root {
-      --sets-size: 36px;
-      --center-points-size: 52px;
+      --center-points-size: 100px;
     }
   }
 </style>
 </head>
 <body>
   <div id="hud">
-    <div id="setsDisplay"><span id="setsA">0</span><span style="margin:0 12px;">:</span><span id="setsB">0</span></div>
-    <div id="msg"></div>
+    <div id="setsDisplay">
+	<span id="setsA">0</span>:<span id="setsB">0</span></div>
   </div>
 
-  <div class="play-area" role="region" aria-label="Pole gry">
+  <div class="play-area" role="region">
     <div class="half" id="left"><div class="center-counter" id="midA">0</div></div>
-    <div class="center-line" aria-hidden="true"></div>
+		<div class="center-line"></div>
     <div class="half" id="right"><div class="center-counter" id="midB">0</div></div>
-  </div>
-
-  <div class="controls">
-    <button id="resetMatch">Resetuj mecz</button>
   </div>
 
   <script>
@@ -120,17 +97,16 @@
       });
     }
 
-    const POINTS_TO_WIN = 11, MUST_WIN_BY = 2, DEBOUNCE_MS = 200;
+    const POINTS_TO_WIN = 11, MUST_WIN_BY = 2, DEBOUNCE_MS = 3000;
     let pointsA = 0, pointsB = 0, setsA = 0, setsB = 0, lastTap = 0;
 
     const elMidA = document.getElementById('midA');
     const elMidB = document.getElementById('midB');
     const elSetsA = document.getElementById('setsA');
     const elSetsB = document.getElementById('setsB');
-    const elMsg = document.getElementById('msg');
     const left = document.getElementById('left');
     const right = document.getElementById('right');
-    const resetMatch = document.getElementById('resetMatch');
+    const hud = document.getElementById('hud');
 
     function updateHUD(){
       elMidA.textContent = pointsA;
@@ -140,53 +116,46 @@
     }
 
     function checkSetEnd(){
-      if ((pointsA >= POINTS_TO_WIN || pointsB >= POINTS_TO_WIN) && Math.abs(pointsA - pointsB) >= MUST_WIN_BY){
-        if (pointsA > pointsB){ setsA++; elMsg.textContent = 'A wygra³'; } else { setsB++; elMsg.textContent = 'B wygra³'; }
-        updateHUD(); setTimeout(startNewSet,1200); return true;
-      }
-      return false;
+      if ((pointsA >= POINTS_TO_WIN || pointsB >= POINTS_TO_WIN) && Math.abs(pointsA - pointsB) >= MUST_WIN_BY) {
+			if (pointsA > pointsB){ 
+					setsA++;
+				} else { 
+					setsB++; 
+				}
+				
+				updateHUD(); setTimeout(startNewSet,1500); return true;
+		  }
+		  return false;
     }
 
-    function startNewSet(){ pointsA = 0; pointsB = 0; elMsg.textContent = ''; updateHUD(); }
+    function startNewSet(){ 
+		pointsA = 0; 
+		pointsB = 0; 
+		updateHUD(); 
+	}
 
     function awardPoint(side){
       const now = Date.now(); if (now - lastTap < DEBOUNCE_MS) return; lastTap = now;
       if (side === 'A') pointsA++; else pointsB++;
-      updateHUD(); checkSetEnd();
+      updateHUD(); 
+	  checkSetEnd();
     }
 
     function handlePointer(evt, side){
-      // zapobiegamy przyznawaniu punktu jeœli zdarzenie pochodzi z kontrolki UI (np. button)
-      if (evt.target.closest('.controls')) return;
       evt.preventDefault();
       awardPoint(side);
     }
 
-    function globalTapHandler(e){
-      // jeœli klikniêcie/tap pochodzi z elementu w .controls, ignoruj
-      const target = e.target || e.srcElement;
-      if (target.closest && target.closest('.controls')) return;
-      const x = (e.touches && e.touches[0]) ? e.touches[0].clientX : (e.clientX || window.innerWidth/2);
-      if (x < window.innerWidth/2) awardPoint('A'); else awardPoint('B');
-    }
-
-    // obs³uga zdarzeñ tylko na polach oraz globalna jako zapas, ale ka¿dorazowo sprawdzamy element Ÿród³owy
-    left.addEventListener('touchstart', (e)=>handlePointer(e,'A'), {passive:false});
-    right.addEventListener('touchstart', (e)=>handlePointer(e,'B'), {passive:false});
     left.addEventListener('mousedown', (e)=>handlePointer(e,'A'));
     right.addEventListener('mousedown', (e)=>handlePointer(e,'B'));
-    window.addEventListener('touchstart', globalTapHandler, {passive:false});
-    window.addEventListener('click', globalTapHandler);
 
-    resetMatch.addEventListener('click', (e)=>{
-      // zapobiegamy propagacji klikniêcia do globalnego handlera
-      e.stopPropagation();
-      pointsA = pointsB = setsA = setsB = 0;
-      updateHUD();
+    hud.addEventListener('mousedown', (e)=>{
+		  e.stopPropagation();
+		  pointsA = pointsB = setsA = setsB = 0;
+		  updateHUD();
     });
 
     updateHUD();
   </script>
 </body>
 </html>
-
